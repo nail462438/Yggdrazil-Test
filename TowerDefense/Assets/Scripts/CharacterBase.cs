@@ -15,8 +15,9 @@ public class CharacterBase : MonoBehaviour
     public BaseType baseType { get; private set; }
     public StateCharacter stateCharacter { get; private set; }
 
-    public List<GameObject> seenEnemies;
-    public float coolTime;
+    [Header("Status Character")]
+    public float damage;
+    public float fireRate;
 
     private FieldOfView view;
     private TypeManager typeManager;
@@ -32,6 +33,7 @@ public class CharacterBase : MonoBehaviour
     void Start()
     {
         baseType = typeManager.baseType;
+        stateCharacter = StateCharacter.Idle;
     }
 
     // Update is called once per frame
@@ -41,12 +43,39 @@ public class CharacterBase : MonoBehaviour
         {
             case StateCharacter.Idle:
                 {
-                    if (view.CheckEnemyInRadius() != null)
+                    switch (baseType)
                     {
-                        view.targetClosest = GetClosestEnemy(view.CheckEnemyInRadius(), transform);
-                        stateCharacter = StateCharacter.Assault;
+                        case BaseType.TypeA:
+                            {
+                                if (view.CheckEnemyInRadius() != null)
+                                {
+                                    view.targetClosest = DesiredEnemy(view.CheckEnemyInRadius(), transform);
+                                    stateCharacter = StateCharacter.Assault;
+                                }
+                                else Debug.Log("Idle");
+                                break;
+                            }
+                        case BaseType.TypeB:
+                            {
+                                if (view.CheckEnemyInRadius() != null)
+                                {
+                                    view.targetClosest = DesiredEnemy(view.CheckEnemyInRadius(), transform);
+                                    stateCharacter = StateCharacter.Assault;
+                                }
+                                else Debug.Log("Idle");
+                                break;
+                            }
+                        case BaseType.TypeC:
+                            {
+                                if (view.CheckEnemyInRadius() != null)
+                                {
+                                    view.targetClosest = DesiredEnemy(view.CheckEnemyInRadius(), transform);
+                                    stateCharacter = StateCharacter.Assault;
+                                }
+                                else Debug.Log("Idle");
+                                break;
+                            }
                     }
-                    else Debug.Log("Idle");
                     break;
                 }
             case StateCharacter.Assault:
@@ -56,7 +85,15 @@ public class CharacterBase : MonoBehaviour
                         if (view.targetClosest != null)
                         {
                             Debug.Log(view.targetClosest.gameObject.name);
-                            currentTime = coolTime;
+                            if (baseType == view.targetClosest.GetComponent<TypeManager>().baseType)
+                            {
+                                // Damage * 0.5f
+                            }
+                            else
+                            {
+                                // Nomal Damage
+                            }
+                            currentTime = fireRate;
                             stateCharacter = StateCharacter.Prepare;
                         }
                         else stateCharacter = StateCharacter.Idle;
@@ -73,19 +110,26 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-    private Transform GetClosestEnemy(List<Transform> enemies, Transform fromTo)
+    private Transform DesiredEnemy(List<Transform> enemies, Transform fromTo)
     {
         Transform bestTarget = null;
         float closestDistanceSqr = Mathf.Infinity;
         Vector3 currentPosition = fromTo.position;
         foreach (Transform potentialTarget in enemies)
         {
-            Vector3 directionToTarget = potentialTarget.position - currentPosition;
-            float dSqrToTarget = directionToTarget.sqrMagnitude;
-            if (dSqrToTarget < closestDistanceSqr)
+            if (baseType != BaseType.TypeB)
             {
-                closestDistanceSqr = dSqrToTarget;
-                bestTarget = potentialTarget;
+                Vector3 directionToTarget = potentialTarget.position - currentPosition;
+                float dSqrToTarget = directionToTarget.sqrMagnitude;
+                if (dSqrToTarget < closestDistanceSqr)
+                {
+                    closestDistanceSqr = dSqrToTarget;
+                    bestTarget = potentialTarget;
+                }
+            }
+            else
+            {
+
             }
         }
         return bestTarget;

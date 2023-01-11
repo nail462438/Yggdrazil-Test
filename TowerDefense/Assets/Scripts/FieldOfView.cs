@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
-    public float radius;
+    public float radiusShoot;
     [Range(0, 360)]
     public float angle;
 
@@ -17,7 +17,6 @@ public class FieldOfView : MonoBehaviour
 
     private void Start()
     {
-        //targetClosest = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(FOVRoutine());
     }
 
@@ -34,7 +33,7 @@ public class FieldOfView : MonoBehaviour
 
     private void FieldOfViewCheck()
     {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius + 0.5f, targetMask);
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radiusShoot + 0.5f, targetMask);
 
         if (rangeChecks.Length != 0)
         {
@@ -52,7 +51,7 @@ public class FieldOfView : MonoBehaviour
 
     public List<Transform> CheckEnemyInRadius()
     {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius + 0.5f, targetMask);
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radiusShoot + 0.5f, targetMask);
         List<Transform> enemies = new List<Transform>();
 
         if (rangeChecks.Length != 0) 
@@ -62,6 +61,8 @@ public class FieldOfView : MonoBehaviour
                 enemies.Add(obj.transform);
             }
         }
+        else if (canSeePlayer)
+            canSeePlayer = false;
 
         return enemies;
     }
