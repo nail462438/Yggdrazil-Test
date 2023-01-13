@@ -106,7 +106,8 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
-                        currentTime = breakTime;
+                        currentTime = breakTime - currentWave;
+                        if (currentTime < 10) currentTime = 10;
                         UIManager.Instance.SetActiveText(UIManager.Instance.timeText, true);
                         UIManager.Instance.SetText(UIManager.Instance.timeText, $"Next Wave : {currentTime.ToString("F0")}", Color.red);
                         stateSpawner = StateSpawner.Break;
