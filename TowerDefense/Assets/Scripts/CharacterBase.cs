@@ -193,10 +193,10 @@ public class CharacterBase : MonoBehaviour
 
     private void UpgradeTower(float money)
     {
-        if (money > basePrice * 5)
+        if (money > basePrice * 6)
         {
+            GameManager.Instance.money -= basePrice * 6;
             damage *= 1.5f;
-            basePrice *= 2;
         }
         else
         {
