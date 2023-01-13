@@ -11,7 +11,6 @@ public class GridSystem : MonoBehaviour
     public int height;
 
     public float cellSize;
-    public LayerMask mouseLayer;
     public int[,] gridArray;
 
     // Start is called before the first frame update
@@ -29,25 +28,6 @@ public class GridSystem : MonoBehaviour
         }
         Debug.DrawLine(GetWorldPosition(0, height, cellSize), GetWorldPosition(width, height, cellSize));
         Debug.DrawLine(GetWorldPosition(width, 0, cellSize), GetWorldPosition(width, height, cellSize));
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private Vector3 GetMousePositionWorld()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 999f, mouseLayer))
-        {
-            return hit.point;
-        }
-        else
-        {
-            return Vector3.zero;
-        }
     }
 
     private Vector3 GetWorldPosition(int x, int y, float cellSize)

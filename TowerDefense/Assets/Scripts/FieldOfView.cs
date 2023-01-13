@@ -9,7 +9,7 @@ public class FieldOfView : MonoBehaviour
     [Range(0, 360)]
     public float angle;
 
-    public Transform targetClosest;
+    public Transform targetBest;
 
     public LayerMask targetMask;
 
@@ -49,16 +49,16 @@ public class FieldOfView : MonoBehaviour
             canSeePlayer = false;
     }
 
-    public List<Transform> CheckEnemyInRadius()
+    public List<GameObject> CheckEnemyInRadius()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radiusShoot + 0.5f, targetMask);
-        List<Transform> enemies = new List<Transform>();
+        List<GameObject> enemies = new List<GameObject>();
 
-        if (rangeChecks.Length != 0) 
+        if (rangeChecks.Length != 0)
         {
             foreach (var obj in rangeChecks)
             {
-                enemies.Add(obj.transform);
+                enemies.Add(obj.gameObject);
             }
         }
         else if (canSeePlayer)

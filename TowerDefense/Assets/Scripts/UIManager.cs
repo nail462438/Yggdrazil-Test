@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,26 +12,45 @@ public class UIManager : MonoBehaviour
 
     public GameObject timeText;
     public GameObject waveText;
+    public GameObject moneyText;
+    public GameObject popupText;
+    public GameObject enemyTypeText;
+    public GameObject hpText;
+    public GameObject myDeck;
+    public GameObject nameTowerText;
+    public GameObject myCommand;
+    public GameObject gameOverPanel;
+    public GameObject scoreText;
+
+    [Header("Button")]
+    public GameObject upgradeButton;
+    public GameObject sellButton;
+    public Button restartGame;
 
     private void Awake()
     {
         instance = this;
     }
 
-    public void SetTimeText(string text, Color color)
+    private void Start()
     {
-        timeText.GetComponent<TextMeshProUGUI>().text = text;
-        timeText.GetComponent<TextMeshProUGUI>().color = color;
+        restartGame.onClick.AddListener(() => RestartGame());
     }
 
-    public void SetWaveText(string text, Color color)
+    public void RestartGame()
     {
-        waveText.GetComponent<TextMeshProUGUI>().text = text;
-        waveText.GetComponent<TextMeshProUGUI>().color = color;
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
     }
 
-    public void SetActiveText(bool active)
+    public void SetText(GameObject text, string message, Color color)
     {
-        timeText.SetActive(active);
+        text.GetComponent<TextMeshProUGUI>().text = message;
+        text.GetComponent<TextMeshProUGUI>().color = color;
+    }
+
+    public void SetActiveText(GameObject text, bool active)
+    {
+        text.SetActive(active);
     }
 }
