@@ -34,12 +34,13 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1;
         restartGame.onClick.AddListener(() => RestartGame());
     }
 
     public void RestartGame()
     {
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
 

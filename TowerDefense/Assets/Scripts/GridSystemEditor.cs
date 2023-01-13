@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 
@@ -27,3 +28,4 @@ public class GridSystemEditor : Editor
         return new Vector3(x, 0, y) * cellSize;
     }
 }
+#endif
