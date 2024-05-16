@@ -18,4 +18,5 @@ MonoBehaviour:
   Description: '"Shoot cool ice guns."'
   TypeBuilding: TypeC
   Price: 400
+  Rarity: 1
   Building: {fileID: 3821626446457578767, guid: 19c39941141bf9c42905a7aaac0ce6a8, type: 3}

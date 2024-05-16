@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     public GameObject upgradeButton;
     public GameObject sellButton;
     public Button restartGame;
+    public Button DrawButton;
 
     private void Awake()
     {
@@ -53,5 +54,28 @@ public class UIManager : MonoBehaviour
     public void SetActiveText(GameObject text, bool active)
     {
         text.SetActive(active);
+    }
+
+    public void UpdateTextUpgradeButton(string price)
+    {
+        upgradeButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"UPGRADE\n{price}";
+    }
+
+    public void UpdateTextSellButton(string price)
+    {
+        sellButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"SELL\n{price}";
+    }
+
+    public void ShowPopupNotEnouge()
+    {
+        StartCoroutine(ClosePopupAuto());
+    }
+
+    IEnumerator ClosePopupAuto()
+    {
+        UIManager.Instance.SetActiveText(UIManager.Instance.popupText, true);
+        UIManager.Instance.SetText(UIManager.Instance.popupText, $"Money not enought", Color.red);
+        yield return new WaitForSeconds(2);
+        UIManager.Instance.SetActiveText(UIManager.Instance.popupText, false);
     }
 }

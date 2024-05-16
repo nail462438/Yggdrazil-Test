@@ -279,6 +279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c419a8f95049fcb4fb73ef9530e9bc8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameEnemy: Wolf
   hp: 100
   speed: 1
   hpBar: {fileID: 8262141243784456759}

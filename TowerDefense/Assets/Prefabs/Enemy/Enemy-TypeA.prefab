@@ -304,6 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c419a8f95049fcb4fb73ef9530e9bc8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameEnemy: Baby Wolf
   hp: 30
   speed: 5
   hpBar: {fileID: 6585944600943781766}

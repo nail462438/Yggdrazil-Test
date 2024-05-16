@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Card : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public GameObject building;
     public int cost;
@@ -22,17 +22,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDrag
         GameManager.Instance.holdCard = true;
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        clone.GetComponent<CanvasGroup>().blocksRaycasts = false;
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        clone.transform.position = eventData.position;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
         if (GameManager.Instance.showModel && GameManager.Instance.money >= cost && !GameManager.Instance.boxPlane[GameManager.Instance.indexBox].GetComponent<BoxPlane>().busy)
         {
@@ -54,6 +44,21 @@ public class Card : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDrag
         Destroy(clone);
         GetComponent<CanvasGroup>().alpha = 1f;
         GameManager.Instance.holdCard = false;
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        clone.GetComponent<CanvasGroup>().blocksRaycasts = false;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        clone.transform.position = eventData.position;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        
     }
 
     IEnumerator ClosePopupAuto()

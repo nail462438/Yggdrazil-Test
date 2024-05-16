@@ -10,6 +10,7 @@ public class EnemyBase : MonoBehaviour
     public BaseType baseType { get; private set; }
 
     [Header("Status Enemy")]
+    public string nameEnemy;
     public float hp;
     public float speed;
     public Slider hpBar;
@@ -84,6 +85,8 @@ public class EnemyBase : MonoBehaviour
                     GameManager.Instance.money += 40;
                     break;
             }
+
+            GameManager.Instance.EnemiesInRound.Remove(this);
             Destroy(gameObject);
         }
     }

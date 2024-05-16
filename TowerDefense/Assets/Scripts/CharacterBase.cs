@@ -32,6 +32,8 @@ public class CharacterBase : MonoBehaviour
     [HideInInspector] public string nameTower;
     public List<GameObject> goalEnemyies;
 
+    private int currentLevel = 1;
+
     private void Awake()
     {
         view = GetComponent<FieldOfView>();
@@ -193,15 +195,22 @@ public class CharacterBase : MonoBehaviour
 
     private void UpgradeTower(float money)
     {
-        if (money > basePrice * 6)
+        if (money > basePrice * currentLevel * 6)
         {
-            GameManager.Instance.money -= basePrice * 6;
+            GameManager.Instance.money -= basePrice * currentLevel * 6;
             damage *= 1.5f;
+            currentLevel += 1;
         }
         else
         {
-            StartCoroutine(ClosePopupAuto());
+            UIManager.Instance.ShowPopupNotEnouge();
         }
+
+        int priceUpgrade = basePrice * currentLevel * 6;
+        UIManager.Instance.UpdateTextUpgradeButton(priceUpgrade.ToString());
+
+        int priceSell = (basePrice * currentLevel) / 2;
+        UIManager.Instance.UpdateTextSellButton(priceSell.ToString());
     }
 
     private void SellTower()
@@ -213,18 +222,10 @@ public class CharacterBase : MonoBehaviour
     {
         anim.SetBool("sell", true);
         UIManager.Instance.SetActiveText(UIManager.Instance.myCommand, false);
-        GameManager.Instance.money += (basePrice / 2);
+        GameManager.Instance.money += ((basePrice * currentLevel) / 2);
         yield return new WaitForSeconds(3);
         GetComponentInParent<BoxPlane>().busy = false;
         Destroy(gameObject);
-    }
-
-    IEnumerator ClosePopupAuto()
-    {
-        UIManager.Instance.SetActiveText(UIManager.Instance.popupText, true);
-        UIManager.Instance.SetText(UIManager.Instance.popupText, $"Money not enought", Color.red);
-        yield return new WaitForSeconds(2);
-        UIManager.Instance.SetActiveText(UIManager.Instance.popupText, false);
     }
 
     private void OnMouseDown()
@@ -238,8 +239,11 @@ public class CharacterBase : MonoBehaviour
 
             UIManager.Instance.SetActiveText(UIManager.Instance.myCommand, true);
             UIManager.Instance.SetText(UIManager.Instance.nameTowerText, $"{nameTower}", Color.white);
-            UIManager.Instance.upgradeButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"UPGRADE\n{basePrice * 6}";
-            UIManager.Instance.sellButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"SELL\n{basePrice / 2}";
+
+            int priceUpgrade = basePrice * currentLevel * 6;
+            int priceSell = (basePrice * currentLevel) / 2;
+            UIManager.Instance.UpdateTextUpgradeButton(priceUpgrade.ToString());
+            UIManager.Instance.UpdateTextSellButton(priceSell.ToString());
             UIManager.Instance.upgradeButton.GetComponent<Button>().onClick.AddListener(() => UpgradeTower(GameManager.Instance.money));
             UIManager.Instance.sellButton.GetComponent<Button>().onClick.AddListener(() => SellTower());
         }

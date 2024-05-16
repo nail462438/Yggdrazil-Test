@@ -26,19 +26,26 @@ public class AmmoBase : MonoBehaviour
         while (true)
         {
             yield return wait;
-            if (target == null) Destroy(gameObject);
-            transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            if (target == null)
+            {
+                break;
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            }
             if (Vector3.Distance(transform.position, target.position) <= 0.05f)
             {
+                Instantiate(effect, transform);
+                if (slow && !target.GetComponent<EnemyBase>().isSlow) target.GetComponent<EnemyBase>().FrezeSlow();
+                if (bomb) target.GetComponent<EnemyBase>().Bomb(damage, 1);
+                target.GetComponent<EnemyBase>().hp -= damage;
+                yield return new WaitForSeconds(0.2f);
                 break;
             }
         }
 
-        Instantiate(effect, transform);
-        if (slow && !target.GetComponent<EnemyBase>().isSlow) target.GetComponent<EnemyBase>().FrezeSlow();
-        if (bomb) target.GetComponent<EnemyBase>().Bomb(damage, 1);
-        target.GetComponent<EnemyBase>().hp -= damage;
-        yield return new WaitForSeconds(0.2f);
+        
         Destroy(gameObject);
     }
 }

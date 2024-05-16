@@ -203,6 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c419a8f95049fcb4fb73ef9530e9bc8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameEnemy: Crab
   hp: 50
   speed: 3
   hpBar: {fileID: 5881924525984077498}

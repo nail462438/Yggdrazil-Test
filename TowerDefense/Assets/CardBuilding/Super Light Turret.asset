@@ -18,4 +18,5 @@ MonoBehaviour:
   Description: '"Shoot a cool super light machine gun."'
   TypeBuilding: TypeA
   Price: 500
+  Rarity: 2
   Building: {fileID: 3821626446457578767, guid: 8f2655568d58b074b9ecb7bc9727e6bf, type: 3}

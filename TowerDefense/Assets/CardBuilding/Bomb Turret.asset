@@ -18,4 +18,5 @@ MonoBehaviour:
   Description: '"Shoot a cool exploding gun."'
   TypeBuilding: TypeB
   Price: 800
+  Rarity: 2
   Building: {fileID: 3821626446457578767, guid: f95580af0a08073469b630a9d3634032, type: 3}
